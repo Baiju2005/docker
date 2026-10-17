@@ -40,7 +40,7 @@ const login = async (req, res) => {
 
   res.status(200).json({ 
     message: "Login successful", 
-    user: { id: user.id, name: user.name, email: user.email },
+    user: { id: user.id, name: user.name, email: user.email },  
     token });
 };
 
@@ -54,7 +54,9 @@ const getUserProfile = async (req, res) => {
     return res.status(404).send("User not found");
   }
 
-  res.status(200).send(`Hello ${user.name}`);
+  res.status(200).json({ name: user.name });
 };
+
+
 
 module.exports = { register, login, getUserProfile };

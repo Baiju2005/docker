@@ -1,10 +1,12 @@
 import { LockKeyhole } from "lucide-react";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import authApi from "../../../services/authApi";
 
 const Login = () => {
-  const [error, setError] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [error, setError] = useState(location.state?.message || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -16,14 +18,12 @@ const Login = () => {
     };
 
     setError("");
-    setCurrentUser(null);
     setIsSubmitting(true);
 
     try {
       const loginResponse = await authApi.login(credentials);
       localStorage.setItem("authToken", loginResponse.token);
-      const profile = await authApi.getCurrentUser(loginResponse.token);
-      setCurrentUser({ ...loginResponse.user, profile });
+      navigate("/profile", { replace: true });
     } catch (requestError) {
       setError(requestError?.message || "Login failed. Please try again.");
     } finally {
@@ -98,12 +98,6 @@ const Login = () => {
             {isSubmitting ? "Signing in..." : "Sign in"}
           </button>
         </form>
-
-        {currentUser && (
-          <p role="status" className="mt-4 text-center text-sm text-green-600">
-            {currentUser.profile || `Welcome, ${currentUser.name}`}
-          </p>
-        )}
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{" "}

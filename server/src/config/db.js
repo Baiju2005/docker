@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
 );
 
 const connectDB = async () => {
+  
   try {
     await sequelize.authenticate();
     console.log("Database connection has been established successfully.");
@@ -20,6 +21,7 @@ const connectDB = async () => {
     console.error("Unable to initialize the database:", error);
     throw error;
   }
+
 };
 
 module.exports = { sequelize, connectDB };

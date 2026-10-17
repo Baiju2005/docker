@@ -9,8 +9,8 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!hjkhv");
+app.get("/api", (req, res) => {
+  res.send("Hello, World!");
 });
 
 app.use("/api/auth", authRoutes);

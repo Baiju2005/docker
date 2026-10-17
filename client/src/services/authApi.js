@@ -1,6 +1,7 @@
 import BaseApi from "./api";
 
 const authApi = {
+
   register: async (userData) => {
     try {
       const response = await BaseApi.post("/auth/register", userData);
@@ -9,6 +10,7 @@ const authApi = {
       throw error.response?.data ?? error;
     }
   },
+
   login: async (userData) => {
     try {
       const response = await BaseApi.post("/auth/login", userData);
@@ -17,14 +19,13 @@ const authApi = {
       throw error.response?.data ?? error;
     }
   },
+
   logout: async () => {
-    try {
-      const response = await BaseApi.post("/auth/logout");
-      return response.data;
-    } catch (error) {
-      throw error.response.data;
-    }
+    localStorage.removeItem("token");
   },
+
+
+  
   getCurrentUser: async (token) => {
     try {
       const response = await BaseApi.get("/auth/me", {
@@ -35,6 +36,7 @@ const authApi = {
       throw error.response?.data ?? error;
     }
   },
+
 };
 
 export default authApi;

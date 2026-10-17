@@ -1,19 +1,14 @@
 FROM node:22-alpine
 
-
-WORKDIR /app
-
+ENV NODE_ENV=production
+WORKDIR /app/server
 
 COPY package*.json ./
+RUN npm ci --omit=dev
 
+COPY index.js ./
+COPY src ./src
 
-RUN npm ci
-
-
-COPY . .
-
-
-EXPOSE 3000
-
+EXPOSE 5000
 
 CMD ["node", "index.js"]
